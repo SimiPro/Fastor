@@ -63,13 +63,13 @@ struct BinaryCmpOp##NAME: public AbstractTensor<BinaryCmpOp##NAME<TLhs, TRhs, DI
            typename std::enable_if<std::is_arithmetic<LExpr>::value &&\
                                    !std::is_arithmetic<RExpr>::value,bool>::type = 0>\
     FASTOR_INLINE SIMDVector<UU,ABI> helper(FASTOR_INDEX i) const {\
-        return (EVAL_TYPE)_lhs OP _rhs.template eval<EVAL_TYPE>(i);\
+        return static_cast<EVAL_TYPE>(_lhs) OP _rhs.template eval<EVAL_TYPE>(i);\
     }\
     template<typename LExpr, typename RExpr, typename U,\
            typename std::enable_if<!std::is_arithmetic<LExpr>::value &&\
                                    std::is_arithmetic<RExpr>::value,bool>::type = 0>\
     FASTOR_INLINE SIMDVector<UU,ABI> helper(FASTOR_INDEX i) const {\
-        return _lhs.template eval<EVAL_TYPE>(i) OP (EVAL_TYPE)_rhs;\
+        return _lhs.template eval<EVAL_TYPE>(i) OP static_cast<EVAL_TYPE>(_rhs);\
     }\
     template<typename U>\
     FASTOR_INLINE UU eval_s(FASTOR_INDEX i) const {\
@@ -85,13 +85,13 @@ struct BinaryCmpOp##NAME: public AbstractTensor<BinaryCmpOp##NAME<TLhs, TRhs, DI
            typename std::enable_if<std::is_arithmetic<LExpr>::value &&\
                                    !std::is_arithmetic<RExpr>::value,bool>::type = 0>\
     FASTOR_INLINE UU helper_s(FASTOR_INDEX i) const {\
-        return (EVAL_TYPE)_lhs OP _rhs.template eval_s<EVAL_TYPE>(i);\
+        return static_cast<EVAL_TYPE>(_lhs) OP _rhs.template eval_s<EVAL_TYPE>(i);\
     }\
     template<typename LExpr, typename RExpr, typename U,\
            typename std::enable_if<!std::is_arithmetic<LExpr>::value &&\
                                    std::is_arithmetic<RExpr>::value,bool>::type = 0>\
     FASTOR_INLINE UU helper_s(FASTOR_INDEX i) const {\
-        return _lhs.template eval_s<EVAL_TYPE>(i) OP (EVAL_TYPE)_rhs;\
+        return _lhs.template eval_s<EVAL_TYPE>(i) OP static_cast<EVAL_TYPE>(_rhs);\
     }\
     template<typename U>\
     FASTOR_INLINE SIMDVector<UU,ABI> eval(FASTOR_INDEX i, FASTOR_INDEX j) const {\
@@ -107,13 +107,13 @@ struct BinaryCmpOp##NAME: public AbstractTensor<BinaryCmpOp##NAME<TLhs, TRhs, DI
            typename std::enable_if<std::is_arithmetic<LExpr>::value &&\
                                    !std::is_arithmetic<RExpr>::value,bool>::type = 0>\
     FASTOR_INLINE SIMDVector<UU,ABI> helper(FASTOR_INDEX i, FASTOR_INDEX j) const {\
-        return (EVAL_TYPE)_lhs OP _rhs.template eval<EVAL_TYPE>(i,j);\
+        return static_cast<EVAL_TYPE>(_lhs) OP _rhs.template eval<EVAL_TYPE>(i,j);\
     }\
     template<typename LExpr, typename RExpr, typename U,\
            typename std::enable_if<!std::is_arithmetic<LExpr>::value &&\
                                    std::is_arithmetic<RExpr>::value,bool>::type = 0>\
     FASTOR_INLINE SIMDVector<UU,ABI> helper(FASTOR_INDEX i, FASTOR_INDEX j) const {\
-        return _lhs.template eval<EVAL_TYPE>(i,j) OP (EVAL_TYPE)_rhs;\
+        return _lhs.template eval<EVAL_TYPE>(i,j) OP static_cast<EVAL_TYPE>(_rhs);\
     }\
     template<typename U>\
     FASTOR_INLINE UU eval_s(FASTOR_INDEX i, FASTOR_INDEX j) const {\
@@ -129,13 +129,13 @@ struct BinaryCmpOp##NAME: public AbstractTensor<BinaryCmpOp##NAME<TLhs, TRhs, DI
            typename std::enable_if<std::is_arithmetic<LExpr>::value &&\
                                    !std::is_arithmetic<RExpr>::value,bool>::type = 0>\
     FASTOR_INLINE UU helper_s(FASTOR_INDEX i, FASTOR_INDEX j) const {\
-        return (EVAL_TYPE)_lhs OP _rhs.template eval_s<EVAL_TYPE>(i,j);\
+        return static_cast<EVAL_TYPE>(_lhs) OP _rhs.template eval_s<EVAL_TYPE>(i,j);\
     }\
     template<typename LExpr, typename RExpr, typename U,\
            typename std::enable_if<!std::is_arithmetic<LExpr>::value &&\
                                    std::is_arithmetic<RExpr>::value,bool>::type = 0>\
     FASTOR_INLINE UU helper_s(FASTOR_INDEX i, FASTOR_INDEX j) const {\
-        return _lhs.template eval_s<EVAL_TYPE>(i,j) OP (EVAL_TYPE)_rhs;\
+        return _lhs.template eval_s<EVAL_TYPE>(i,j) OP static_cast<EVAL_TYPE>(_rhs);\
     }\
     template<typename U>\
     FASTOR_INLINE SIMDVector<UU,simd_abi_type> teval(const std::array<int,DIM0> &as) const {\
@@ -151,13 +151,13 @@ struct BinaryCmpOp##NAME: public AbstractTensor<BinaryCmpOp##NAME<TLhs, TRhs, DI
            typename std::enable_if<std::is_arithmetic<LExpr>::value &&\
                                    !std::is_arithmetic<RExpr>::value,bool>::type = 0>\
     FASTOR_INLINE SIMDVector<UU,simd_abi_type> thelper(const std::array<int,DIM0> &as) const {\
-        return (EVAL_TYPE)_lhs OP _rhs.template teval<EVAL_TYPE>(as);\
+        return static_cast<EVAL_TYPE>(_lhs) OP _rhs.template teval<EVAL_TYPE>(as);\
     }\
     template<typename LExpr, typename RExpr, typename U,\
            typename std::enable_if<!std::is_arithmetic<LExpr>::value &&\
                                    std::is_arithmetic<RExpr>::value,bool>::type = 0>\
     FASTOR_INLINE SIMDVector<UU,simd_abi_type> thelper(const std::array<int,DIM0> &as) const {\
-        return _lhs.template teval<EVAL_TYPE>(as) OP (EVAL_TYPE)_rhs;\
+        return _lhs.template teval<EVAL_TYPE>(as) OP static_cast<EVAL_TYPE>(_rhs);\
     }\
     template<typename U>\
     FASTOR_INLINE UU teval_s(const std::array<int,DIM0> &as) const {\
@@ -173,13 +173,13 @@ struct BinaryCmpOp##NAME: public AbstractTensor<BinaryCmpOp##NAME<TLhs, TRhs, DI
            typename std::enable_if<std::is_arithmetic<LExpr>::value &&\
                                    !std::is_arithmetic<RExpr>::value,bool>::type = 0>\
     FASTOR_INLINE UU thelper_s(const std::array<int,DIM0> &as) const {\
-        return (EVAL_TYPE)_lhs OP _rhs.template teval_s<EVAL_TYPE>(as);\
+        return static_cast<EVAL_TYPE>(_lhs) OP _rhs.template teval_s<EVAL_TYPE>(as);\
     }\
     template<typename LExpr, typename RExpr, typename U,\
            typename std::enable_if<!std::is_arithmetic<LExpr>::value &&\
                                    std::is_arithmetic<RExpr>::value,bool>::type = 0>\
     FASTOR_INLINE UU thelper_s(const std::array<int,DIM0> &as) const {\
-        return _lhs.template teval_s<EVAL_TYPE>(as) OP (EVAL_TYPE)_rhs;\
+        return _lhs.template teval_s<EVAL_TYPE>(as) OP static_cast<EVAL_TYPE>(_rhs);\
     }\
 };\
 template<typename TLhs, typename TRhs, size_t DIM0,\

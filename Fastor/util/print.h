@@ -55,11 +55,11 @@ struct IOFormat {
 
 #ifdef FASTOR_SSE2_IMPL
 inline void print(__m128 b) {
-    const float* a = (const float*)&b;
+    const auto* a = reinterpret_cast<const float*>(&b);
     std::cout << a[0] << " " << a[1] << " " << a[2] << " " << a[3] << '\n';
 }
 inline void print(__m128d b) {
-    const double* a = (const double*)&b;
+    const auto* a = reinterpret_cast<const double*>(&b);
     std::cout << a[0] << " " << a[1] << '\n';
 }
 #endif

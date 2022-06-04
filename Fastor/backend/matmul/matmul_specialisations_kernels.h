@@ -2,6 +2,9 @@
 #define MATMUL_SPECIALISATIONS_KERNELS_H
 
 
+#pragma GCC diagnostic ignored "-Wshadow"
+
+
 // Forward declare
 //-----------------------------------------------------------------------------------------------------------
 namespace internal {
@@ -64,7 +67,7 @@ void _matmul(const T * FASTOR_RESTRICT a, const T * FASTOR_RESTRICT b, T * FASTO
     __m128 brow = ZEROPS;
     for (size_t i=0; i<K; i++) {
         // __m128 brow = _mm_loadu_ps(&b[i*2]);
-        brow = _mm_loadl_pi(brow,(__m64*)&b[i*2]);
+        brow = _mm_loadl_pi(brow,reinterpret_cast<const __m64*>(&b[i*2]));
 #ifndef FASTOR_FMA_IMPL
         // row 0
         __m128 a_vec0 = _mm_set1_ps(a[i]);
@@ -1128,13 +1131,13 @@ FASTOR_INLINE void _matmul<float,2,2,1>(const float * FASTOR_RESTRICT a, const f
     // 11 OPS
     __m128 amm = _mm_loadu_ps(a);
     __m128 bmm = ZEROPS;
-    bmm = _mm_loadl_pi(bmm, (__m64*)b);
+    bmm = _mm_loadl_pi(bmm, reinterpret_cast<const __m64*>(b));
 
     __m128 res   = _mm_mul_ps(amm,_mm_movelh_ps(bmm,bmm));
     __m128 res2  = _mm_shuffle_ps(res ,res ,_MM_SHUFFLE(2,3,0,1));
     res2         = _mm_add_ps(res,res2);
     __m128 res3  = _mm_shuffle_ps(res2,res2,_MM_SHUFFLE(3,1,2,0));
-    _mm_storel_pi((__m64*) out,res3);
+    _mm_storel_pi(reinterpret_cast<__m64*>( out),res3);
 }
 
 template<>

@@ -137,7 +137,7 @@ FASTOR_INLINE void trivial_assign(AbstractTensor<Derived,DIM> &dst, U num) {
     using T = typename Derived::scalar_type;
     using V = typename Derived::simd_vector_type;
     T* _data = dst.self().data();
-    T cnum = (T)num;
+    T cnum = static_cast<T>(num);
     V _vec(cnum);
     FASTOR_INDEX i = 0;
     for (; i< ROUND_DOWN(dst.self().size(),V::Size); i+=V::Size) {
@@ -154,7 +154,7 @@ FASTOR_INLINE void trivial_assign_add(AbstractTensor<Derived,DIM> &dst, U num) {
     using T = typename Derived::scalar_type;
     using V = typename Derived::simd_vector_type;
     T* _data = dst.self().data();
-    T cnum = (T)num;
+    T cnum = static_cast<T>(num);
     V _vec(cnum);
     FASTOR_INDEX i = 0;
     for (; i< ROUND_DOWN(dst.self().size(),V::Size); i+=V::Size) {
@@ -173,7 +173,7 @@ FASTOR_INLINE void trivial_assign_sub(AbstractTensor<Derived,DIM> &dst, U num) {
     using T = typename Derived::scalar_type;
     using V = typename Derived::simd_vector_type;
     T* _data = dst.self().data();
-    T cnum = (T)num;
+    T cnum = static_cast<T>(num);
     V _vec(cnum);
     FASTOR_INDEX i = 0;
     for (; i< ROUND_DOWN(dst.self().size(),V::Size); i+=V::Size) {
@@ -192,7 +192,7 @@ FASTOR_INLINE void trivial_assign_mul(AbstractTensor<Derived,DIM> &dst, U num) {
     using T = typename Derived::scalar_type;
     using V = typename Derived::simd_vector_type;
     T* _data = dst.self().data();
-    T cnum = (T)num;
+    T cnum = static_cast<T>(num);
     V _vec(cnum);
     FASTOR_INDEX i = 0;
     for (; i< ROUND_DOWN(dst.self().size(),V::Size); i+=V::Size) {
@@ -211,7 +211,7 @@ FASTOR_INLINE void trivial_assign_div(AbstractTensor<Derived,DIM> &dst, U num) {
     using T = typename Derived::scalar_type;
     using V = typename Derived::simd_vector_type;
     T* _data = dst.self().data();
-    T cnum = T(1) / (T)num;
+    T cnum = T(1) / static_cast<T>(num);
     V _vec(cnum);
     FASTOR_INDEX i = 0;
     for (; i< ROUND_DOWN(dst.self().size(),V::Size); i+=V::Size) {
@@ -229,7 +229,7 @@ FASTOR_INLINE void trivial_assign_div(AbstractTensor<Derived,DIM> &dst, U num) {
     using T = typename Derived::scalar_type;
     using V = typename Derived::simd_vector_type;
     T* _data = dst.self().data();
-    T cnum = (T)num;
+    T cnum = static_cast<T>(num);
     V _vec(cnum);
     FASTOR_INDEX i = 0;
     for (; i< ROUND_DOWN(dst.self().size(),V::Size); i+=V::Size) {

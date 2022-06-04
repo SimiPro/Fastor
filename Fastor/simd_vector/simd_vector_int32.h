@@ -90,7 +90,7 @@ struct SIMDVector<int32_t,simd_abi::avx512> {
         mask_to_array(mask,maska);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                a[Size - i - 1] = ((const scalar_value_type*)&value)[Size - i - 1];
+                a[Size - i - 1] = (reinterpret_cast<const scalar_value_type*>(&value))[Size - i - 1];
             }
             else {
                 a[Size - i - 1] = 0;
@@ -184,7 +184,7 @@ struct SIMDVector<int32_t,simd_abi::avx512> {
     }
 
     FASTOR_INLINE int32_t minimum() {
-        int32_t *vals = (int32_t*)&value;
+        int32_t *vals = reinterpret_cast<int32_t*>(&value);
         int32_t quan = 0;
         for (FASTOR_INDEX i=0; i<Size; ++i)
             if (vals[i]<quan)
@@ -192,7 +192,7 @@ struct SIMDVector<int32_t,simd_abi::avx512> {
         return quan;
     }
     FASTOR_INLINE int32_t maximum() {
-        int32_t *vals = (int32_t*)&value;
+        int32_t *vals = reinterpret_cast<int32_t*>(&value);
         int32_t quan = 0;
         for (FASTOR_INDEX i=0; i<Size; ++i)
             if (vals[i]>quan)
@@ -445,7 +445,7 @@ struct SIMDVector<int32_t,simd_abi::avx> {
         mask_to_array(mask,maska);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                a[Size - i - 1] = ((const scalar_value_type*)&value)[Size - i - 1];
+                a[Size - i - 1] = (reinterpret_cast<const scalar_value_type*>(&value))[Size - i - 1];
             }
             else {
                 a[Size - i - 1] = 0;
@@ -525,7 +525,7 @@ struct SIMDVector<int32_t,simd_abi::avx> {
     }
 
     FASTOR_INLINE int32_t minimum() {
-        int32_t *vals = (int32_t*)&value;
+        int32_t *vals = reinterpret_cast<int32_t*>(&value);
         int32_t quan = 0;
         for (FASTOR_INDEX i=0; i<Size; ++i)
             if (vals[i]<quan)
@@ -533,7 +533,7 @@ struct SIMDVector<int32_t,simd_abi::avx> {
         return quan;
     }
     FASTOR_INLINE int32_t maximum() {
-        int32_t *vals = (int32_t*)&value;
+        int32_t *vals = reinterpret_cast<int32_t*>(&value);
         int32_t quan = 0;
         for (FASTOR_INDEX i=0; i<Size; ++i)
             if (vals[i]>quan)
@@ -700,9 +700,9 @@ struct SIMDVector<int32_t,simd_abi::sse> {
     FASTOR_INLINE SIMDVector(__m128i regi) : value(regi) {}
     FASTOR_INLINE SIMDVector(const int32_t *data, bool Aligned=true) {
         if (Aligned)
-            value =_mm_load_si128((__m128i*)data);
+            value =_mm_load_si128(reinterpret_cast<const __m128i*>(data));
         else
-            value = _mm_loadu_si128((__m128i*)data);
+            value = _mm_loadu_si128(reinterpret_cast<const __m128i*>(data));
     }
 
     FASTOR_INLINE SIMDVector<int32_t,simd_abi::sse> operator=(int32_t num) {
@@ -716,22 +716,22 @@ struct SIMDVector<int32_t,simd_abi::sse> {
 
     FASTOR_INLINE void load(const int32_t *data, bool Aligned=true) {
         if (Aligned)
-            value =_mm_load_si128((__m128i*)data);
+            value =_mm_load_si128(reinterpret_cast<const __m128i*>(data));
         else
-            value = _mm_loadu_si128((__m128i*)data);
+            value = _mm_loadu_si128(reinterpret_cast<const __m128i*>(data));
     }
     FASTOR_INLINE void store(int32_t *data, bool Aligned=true) const {
         if (Aligned)
-            _mm_store_si128((__m128i*)data,value);
+            _mm_store_si128(reinterpret_cast<__m128i*>(data),value);
         else
-            _mm_storeu_si128((__m128i*)data,value);
+            _mm_storeu_si128(reinterpret_cast<__m128i*>(data),value);
     }
 
     FASTOR_INLINE void aligned_load(const int32_t *data) {
-        value =_mm_load_si128((__m128i*)data);
+        value =_mm_load_si128(reinterpret_cast<const __m128i*>(data));
     }
     FASTOR_INLINE void aligned_store(int32_t *data) const {
-        _mm_store_si128((__m128i*)data,value);
+        _mm_store_si128(reinterpret_cast<__m128i*>(data),value);
     }
 
     FASTOR_INLINE void mask_load(const scalar_value_type *a, uint8_t mask, bool Aligned=false) {
@@ -747,7 +747,7 @@ struct SIMDVector<int32_t,simd_abi::sse> {
         value = _mm_setzero_si128();
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                ((scalar_value_type*)&value)[Size - i - 1] = a[Size - i - 1];
+                (reinterpret_cast<scalar_value_type*>(&value))[Size - i - 1] = a[Size - i - 1];
             }
         }
         unused(Aligned);
@@ -765,7 +765,7 @@ struct SIMDVector<int32_t,simd_abi::sse> {
         mask_to_array(mask,maska);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                a[Size - i - 1] = ((const scalar_value_type*)&value)[Size - i - 1];
+                a[Size - i - 1] = (reinterpret_cast<const scalar_value_type*>(&value))[Size - i - 1];
             }
             else {
                 a[Size - i - 1] = 0;
@@ -821,31 +821,31 @@ struct SIMDVector<int32_t,simd_abi::sse> {
     }
 
     FASTOR_INLINE void operator/=(int32_t num) {
-        int32_t val[Size]; _mm_storeu_si128((__m128i*)val, value);
+        int32_t val[Size]; _mm_storeu_si128(reinterpret_cast<__m128i*>(val), value);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             val[i] /= num;
         }
-        value = _mm_loadu_si128((__m128i*)val);
+        value = _mm_loadu_si128(reinterpret_cast<__m128i*>(val));
     }
     FASTOR_INLINE void operator/=(__m128i regi) {
-        int32_t val[Size]; _mm_storeu_si128((__m128i*)val, value);
-        int32_t val_num[Size]; _mm_storeu_si128((__m128i*)val_num, regi);
+        int32_t val[Size]; _mm_storeu_si128(reinterpret_cast<__m128i*>(val), value);
+        int32_t val_num[Size]; _mm_storeu_si128(reinterpret_cast<__m128i*>(val_num), regi);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             val[i] /= val_num[i];
         }
-        value = _mm_loadu_si128((__m128i*)val);
+        value = _mm_loadu_si128(reinterpret_cast<__m128i*>(val));
     }
     FASTOR_INLINE void operator/=(const SIMDVector<int32_t,simd_abi::sse> &a) {
-        int32_t val[Size]; _mm_storeu_si128((__m128i*)val, value);
-        int32_t val_a[Size]; _mm_storeu_si128((__m128i*)val_a, a.value);
+        int32_t val[Size]; _mm_storeu_si128(reinterpret_cast<__m128i*>(val), value);
+        int32_t val_a[Size]; _mm_storeu_si128(reinterpret_cast<__m128i*>(val_a), a.value);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             val[i] /= val_a[i];
         }
-        value = _mm_loadu_si128((__m128i*)val);
+        value = _mm_loadu_si128(reinterpret_cast<__m128i*>(val));
     }
 
     FASTOR_INLINE int32_t minimum() {
-        int32_t *vals = (int32_t*)&value;
+        int32_t *vals = reinterpret_cast<int32_t*>(&value);
         int32_t quan = 0;
         for (FASTOR_INDEX i=0; i<Size; ++i)
             if (vals[i]<quan)
@@ -853,7 +853,7 @@ struct SIMDVector<int32_t,simd_abi::sse> {
         return quan;
     }
     FASTOR_INLINE int32_t maximum() {
-        int32_t *vals = (int32_t*)&value;
+        int32_t *vals = reinterpret_cast<int32_t*>(&value);
         int32_t quan = 0;
         for (FASTOR_INDEX i=0; i<Size; ++i)
             if (vals[i]>quan)
@@ -875,7 +875,7 @@ struct SIMDVector<int32_t,simd_abi::sse> {
 };
 
 FASTOR_HINT_INLINE std::ostream& operator<<(std::ostream &os, SIMDVector<int32_t,simd_abi::sse> a) {
-    const int32_t *value = (int32_t*) &a.value;
+    const int32_t *value = reinterpret_cast<int32_t*>(&a.value);
     os << "[" << value[0] <<  " " << value[1] << " " << value[2] << " " << value[3] << "]\n";
     return os;
 }
@@ -936,33 +936,33 @@ FASTOR_INLINE SIMDVector<int32_t,simd_abi::sse> operator*(int32_t a, const SIMDV
 
 FASTOR_INLINE SIMDVector<int32_t,simd_abi::sse> operator/(const SIMDVector<int32_t,simd_abi::sse> &a, const SIMDVector<int32_t,simd_abi::sse> &b) {
     SIMDVector<int32_t,simd_abi::sse> out;
-    int32_t val[out.size()];   _mm_storeu_si128((__m128i*)val, out.value);
-    int32_t val_a[out.size()]; _mm_storeu_si128((__m128i*)val_a, a.value);
-    int32_t val_b[out.size()]; _mm_storeu_si128((__m128i*)val_b, b.value);
+    int32_t val[out.size()];   _mm_storeu_si128(reinterpret_cast<__m128i*>(val), out.value);
+    int32_t val_a[out.size()]; _mm_storeu_si128(reinterpret_cast<__m128i*>(val_a), a.value);
+    int32_t val_b[out.size()]; _mm_storeu_si128(reinterpret_cast<__m128i*>(val_b), b.value);
     for (FASTOR_INDEX i=0; i<out.size(); ++i) {
         val[i] = val_a[i] / val_b[i];
     }
-    out.value = _mm_loadu_si128((__m128i*)val);
+    out.value = _mm_loadu_si128(reinterpret_cast<__m128i*>(val));
     return out;
 }
 FASTOR_INLINE SIMDVector<int32_t,simd_abi::sse> operator/(const SIMDVector<int32_t,simd_abi::sse> &a, int32_t b) {
     SIMDVector<int32_t,simd_abi::sse> out;
-    int32_t val[out.size()];   _mm_storeu_si128((__m128i*)val, out.value);
-    int32_t val_a[out.size()]; _mm_storeu_si128((__m128i*)val_a, a.value);
+    int32_t val[out.size()];   _mm_storeu_si128(reinterpret_cast<__m128i*>(val), out.value);
+    int32_t val_a[out.size()]; _mm_storeu_si128(reinterpret_cast<__m128i*>(val_a), a.value);
     for (FASTOR_INDEX i=0; i<out.size(); ++i) {
         val[i] = val_a[i] / b;
     }
-    out.value = _mm_loadu_si128((__m128i*)val);
+    out.value = _mm_loadu_si128(reinterpret_cast<__m128i*>(val));
     return out;
 }
 FASTOR_INLINE SIMDVector<int32_t,simd_abi::sse> operator/(int32_t a, const SIMDVector<int32_t,simd_abi::sse> &b) {
     SIMDVector<int32_t,simd_abi::sse> out;
-    int32_t val[out.size()];   _mm_storeu_si128((__m128i*)val, out.value);
-    int32_t val_b[out.size()]; _mm_storeu_si128((__m128i*)val_b, b.value);
+    int32_t val[out.size()];   _mm_storeu_si128(reinterpret_cast<__m128i*>(val), out.value);
+    int32_t val_b[out.size()]; _mm_storeu_si128(reinterpret_cast<__m128i*>(val_b), b.value);
     for (FASTOR_INDEX i=0; i<out.size(); ++i) {
         val[i] = a / val_b[i];
     }
-    out.value = _mm_loadu_si128((__m128i*)val);
+    out.value = _mm_loadu_si128(reinterpret_cast<__m128i*>(val));
     return out;
 }
 

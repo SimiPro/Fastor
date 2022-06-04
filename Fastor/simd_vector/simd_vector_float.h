@@ -685,7 +685,7 @@ struct SIMDVector<float,simd_abi::sse> {
         value = _mm_setzero_ps();
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                ((scalar_value_type*)&value)[Size - i - 1] = a[Size - i - 1];
+                (reinterpret_cast<scalar_value_type*>(&value))[Size - i - 1] = a[Size - i - 1];
             }
         }
         unused(Aligned);
@@ -703,7 +703,7 @@ struct SIMDVector<float,simd_abi::sse> {
         mask_to_array(mask,maska);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                a[Size - i - 1] = ((const scalar_value_type*)&value)[Size - i - 1];
+                a[Size - i - 1] = (reinterpret_cast<const scalar_value_type*>(&value))[Size - i - 1];
             }
             else {
                 a[Size - i - 1] = 0;

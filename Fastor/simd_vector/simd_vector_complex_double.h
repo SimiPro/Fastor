@@ -254,8 +254,8 @@ protected:
         value_i = _mm512_setzero_pd();
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                ((double*)&value_r)[Size - i - 1] = data[Size - i - 1].real();
-                ((double*)&value_i)[Size - i - 1] = data[Size - i - 1].imag();
+                (reinterpret_cast<double*>(&value_r))[Size - i - 1] = data[Size - i - 1].real();
+                (reinterpret_cast<double*>(&value_i))[Size - i - 1] = data[Size - i - 1].imag();
             }
         }
 #endif
@@ -275,8 +275,8 @@ protected:
         value_i = _mm512_setzero_pd();
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                ((double*)&value_r)[Size - i - 1] = data[Size - i - 1].real();
-                ((double*)&value_i)[Size - i - 1] = data[Size - i - 1].imag();
+                (reinterpret_cast<double*>(&value_r))[Size - i - 1] = data[Size - i - 1].real();
+                (reinterpret_cast<double*>(&value_i))[Size - i - 1] = data[Size - i - 1].imag();
             }
         }
 #endif
@@ -296,7 +296,7 @@ protected:
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
                 double _real = ((const double*)&value_r)[Size - i - 1];
-                double _imag = ((const double*)&value_i)[Size - i - 1];
+                double _imag = (reinterpret_cast<const double*>(&value_i))[Size - i - 1];
                 data[Size - i - 1] = std::complex<double>(_real,_imag);
             }
             else {
@@ -319,7 +319,7 @@ protected:
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
                 double _real = ((const double*)&value_r)[Size - i - 1];
-                double _imag = ((const double*)&value_i)[Size - i - 1];
+                double _imag = (reinterpret_cast<const double*>(&value_i))[Size - i - 1];
                 data[Size - i - 1] = std::complex<double>(_real,_imag);
             }
             else {
@@ -780,8 +780,8 @@ protected:
         value_i = _mm256_setzero_pd();
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                ((double*)&value_r)[Size - i - 1] = data[Size - i - 1].real();
-                ((double*)&value_i)[Size - i - 1] = data[Size - i - 1].imag();
+                (reinterpret_cast<double*>(&value_r))[Size - i - 1] = data[Size - i - 1].real();
+                (reinterpret_cast<double*>(&value_i))[Size - i - 1] = data[Size - i - 1].imag();
             }
         }
 #endif
@@ -801,8 +801,8 @@ protected:
         value_i = _mm256_setzero_pd();
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                ((double*)&value_r)[Size - i - 1] = data[Size - i - 1].real();
-                ((double*)&value_i)[Size - i - 1] = data[Size - i - 1].imag();
+                (reinterpret_cast<double*>(&value_r))[Size - i - 1] = data[Size - i - 1].real();
+                (reinterpret_cast<double*>(&value_i))[Size - i - 1] = data[Size - i - 1].imag();
             }
         }
 #endif
@@ -822,7 +822,7 @@ protected:
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
                 double _real = ((const double*)&value_r)[Size - i - 1];
-                double _imag = ((const double*)&value_i)[Size - i - 1];
+                double _imag = (reinterpret_cast<const double*>(&value_i))[Size - i - 1];
                 data[Size - i - 1] = std::complex<double>(_real,_imag);
             }
             else {
@@ -845,7 +845,7 @@ protected:
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
                 double _real = ((const double*)&value_r)[Size - i - 1];
-                double _imag = ((const double*)&value_i)[Size - i - 1];
+                double _imag = (reinterpret_cast<const double*>(&value_i))[Size - i - 1];
                 data[Size - i - 1] = std::complex<double>(_real,_imag);
             }
             else {
@@ -1322,8 +1322,8 @@ protected:
         value_i = _mm_setzero_pd();
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                ((double*)&value_r)[Size - i - 1] = data[Size - i - 1].real();
-                ((double*)&value_i)[Size - i - 1] = data[Size - i - 1].imag();
+                (reinterpret_cast<double*>(&value_r))[Size - i - 1] = data[Size - i - 1].real();
+                (reinterpret_cast<double*>(&value_i))[Size - i - 1] = data[Size - i - 1].imag();
             }
         }
 #endif
@@ -1343,8 +1343,8 @@ protected:
         value_i = _mm_setzero_pd();
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                ((double*)&value_r)[Size - i - 1] = data[Size - i - 1].real();
-                ((double*)&value_i)[Size - i - 1] = data[Size - i - 1].imag();
+                (reinterpret_cast<double*>(&value_r))[Size - i - 1] = data[Size - i - 1].real();
+                (reinterpret_cast<double*>(&value_i))[Size - i - 1] = data[Size - i - 1].imag();
             }
         }
 #endif
@@ -1363,8 +1363,8 @@ protected:
         mask_to_array(mask,maska);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                double _real = ((const double*)&value_r)[Size - i - 1];
-                double _imag = ((const double*)&value_i)[Size - i - 1];
+                double _real = (reinterpret_cast<const double*>(&value_r))[Size - i - 1];
+                double _imag = (reinterpret_cast<const double*>(&value_i))[Size - i - 1];
                 data[Size - i - 1] = std::complex<double>(_real,_imag);
             }
             else {
@@ -1386,8 +1386,8 @@ protected:
         mask_to_array(mask,maska);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                double _real = ((const double*)&value_r)[Size - i - 1];
-                double _imag = ((const double*)&value_i)[Size - i - 1];
+                double _real = (reinterpret_cast<const double*>(&value_r))[Size - i - 1];
+                double _imag = (reinterpret_cast<const double*>(&value_i))[Size - i - 1];
                 data[Size - i - 1] = std::complex<double>(_real,_imag);
             }
             else {
@@ -1597,7 +1597,7 @@ FASTOR_INLINE SIMDVector<std::complex<double>,simd_abi::sse>
 arg(const SIMDVector<std::complex<double>,simd_abi::sse> &a) {
     SIMDVector<std::complex<double>,simd_abi::sse> out(a);
     for (FASTOR_INDEX i=0UL; i<2UL; ++i) {
-       ((double*)&out.value_r)[i] = std::atan2(((double*)&a.value_i)[i],((double*)&a.value_r)[i]);
+       (reinterpret_cast<double*>(&out.value_r))[i] = std::atan2((reinterpret_cast<const double*>(&a.value_i))[i],(reinterpret_cast<const double*>(&a.value_r))[i]);
     }
     return out;
 }

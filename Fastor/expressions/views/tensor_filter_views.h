@@ -164,7 +164,7 @@ public:
     //------------------------------------------------------------------------------------//
     template<typename U=T, enable_if_t_<is_arithmetic_v_<U>,bool> = false>
     void operator=(U num) {
-        T tnum = (T)num;
+        T tnum = static_cast<T>(num);
         for (FASTOR_INDEX i = 0; i <size(); i++) {
             if (fl_expr.eval_s(i)) {
                 _expr.data()[i] = tnum;
@@ -174,7 +174,7 @@ public:
 
     template<typename U=T, enable_if_t_<is_arithmetic_v_<U>,bool> = false>
     void operator+=(U num) {
-        T tnum = (T)num;
+        T tnum = static_cast<T>(num);
         for (FASTOR_INDEX i = 0; i <size(); i++) {
             if (fl_expr.eval_s(i)) {
                 _expr.data()[i] += tnum;
@@ -184,7 +184,7 @@ public:
 
     template<typename U=T, enable_if_t_<is_arithmetic_v_<U>,bool> = false>
     void operator-=(U num) {
-        T tnum = (T)num;
+        T tnum = static_cast<T>(num);
         for (FASTOR_INDEX i = 0; i <size(); i++) {
             if (fl_expr.eval_s(i)) {
                 _expr.data()[i] -= tnum;
@@ -194,7 +194,7 @@ public:
 
     template<typename U=T, enable_if_t_<is_arithmetic_v_<U>,bool> = false>
     void operator*=(U num) {
-        T tnum = (T)num;
+        T tnum = static_cast<T>(num);
         for (FASTOR_INDEX i = 0; i <size(); i++) {
             if (fl_expr.eval_s(i)) {
                 _expr.data()[i] *= tnum;
@@ -204,7 +204,7 @@ public:
 
     template<typename U=T, enable_if_t_<is_arithmetic_v_<U> && !is_integral_v_<U>,bool> = false>
     void operator/=(U num) {
-        T tnum = T(1)/(T)num;
+        T tnum = T(1)/static_cast<T>(num);
         for (FASTOR_INDEX i = 0; i <size(); i++) {
             if (fl_expr.eval_s(i)) {
                 _expr.data()[i] *= tnum;
@@ -213,7 +213,7 @@ public:
     }
     template<typename U=T, enable_if_t_<is_arithmetic_v_<U> && is_integral_v_<U>,bool> = false>
     void operator/=(U num) {
-        T tnum = (T)num;
+        T tnum = static_cast<T>(num);
         for (FASTOR_INDEX i = 0; i <size(); i++) {
             if (fl_expr.eval_s(i)) {
                 _expr.data()[i] /= tnum;

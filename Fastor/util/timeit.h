@@ -111,7 +111,7 @@ inline uint64_t rdtsc() {
     // https://intel.ly/3dXFfQN
 #ifdef FASTOR_SIMPLE_RDTSC
     __asm__ __volatile__ ("rdtsc" : "=a" (lo), "=d" (hi));
-    return ((uint64_t)hi << 32) | lo;
+    return (static_cast<uint64_t>(hi) << 32) | lo;
 #else
     // Use this instead
     __asm__ __volatile__ ("RDTSC\n\t"
@@ -122,7 +122,7 @@ inline uint64_t rdtsc() {
                          "%rax", "%rdx"    // IA-64
                      );
 #endif
-    return ((uint64_t)hi << 32) | lo;
+    return (static_cast<uint64_t>(hi) << 32) | lo;
 }
 
 #ifndef FASTOR_SIMPLE_RDTSC
@@ -321,7 +321,7 @@ timeit(T (*func)(Params...), Args...args)
     worst_time  = *std::max_element(worst_times.begin(),worst_times.begin()+num_collected_samples);
     mean_time   = std::accumulate(mean_times.begin(), mean_times.begin()+num_collected_samples, 0.0);
 
-    mean_time /= (double)counter;
+    mean_time /= static_cast<double>(counter);
 #if defined(FASTOR_USE_RDTSC)
     FASTOR_FORMAT_BENCH_TIME_DISPLAY_1()
 #else

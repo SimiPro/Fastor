@@ -69,7 +69,7 @@ struct SIMDVector<double, simd_abi::avx512> {
         value = _mm512_setzero_pd();
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                ((scalar_value_type*)&value)[Size - i - 1] = a[Size - i - 1];
+                (reinterpret_cast<scalar_value_type*>(&value))[Size - i - 1] = a[Size - i - 1];
             }
         }
         unused(Aligned);
@@ -87,7 +87,7 @@ struct SIMDVector<double, simd_abi::avx512> {
         mask_to_array(mask,maska);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                a[Size - i - 1] = ((const scalar_value_type*)&value)[Size - i - 1];
+                a[Size - i - 1] = (reinterpret_cast<const scalar_value_type*>(&value))[Size - i - 1];
             }
             else {
                 a[Size - i - 1] = 0;
@@ -377,7 +377,7 @@ struct SIMDVector<double, simd_abi::avx> {
         value = _mm256_setzero_pd();
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                ((scalar_value_type*)&value)[Size - i - 1] = a[Size - i - 1];
+                (reinterpret_cast<scalar_value_type*>(&value))[Size - i - 1] = a[Size - i - 1];
             }
         }
         unused(Aligned);
@@ -395,7 +395,7 @@ struct SIMDVector<double, simd_abi::avx> {
         mask_to_array(mask,maska);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                a[Size - i - 1] = ((const scalar_value_type*)&value)[Size - i - 1];
+                a[Size - i - 1] = (reinterpret_cast<const scalar_value_type*>(&value))[Size - i - 1];
             }
             else {
                 a[Size - i - 1] = 0;
@@ -677,7 +677,7 @@ struct SIMDVector<double, simd_abi::sse> {
         value = _mm_setzero_pd();
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                ((scalar_value_type*)&value)[Size - i - 1] = a[Size - i - 1];
+                (reinterpret_cast<scalar_value_type*>(&value))[Size - i - 1] = a[Size - i - 1];
             }
         }
         unused(Aligned);
@@ -695,7 +695,7 @@ struct SIMDVector<double, simd_abi::sse> {
         mask_to_array(mask,maska);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                a[Size - i - 1] = ((const scalar_value_type*)&value)[Size - i - 1];
+                a[Size - i - 1] = (reinterpret_cast<const scalar_value_type*>(&value))[Size - i - 1];
             }
             else {
                 a[Size - i - 1] = 0;
@@ -763,7 +763,7 @@ struct SIMDVector<double, simd_abi::sse> {
     }
     // end of in-place operators
 
-    FASTOR_INLINE SIMDVector<double,simd_abi::sse> shift(FASTOR_INDEX i) {
+    FASTOR_INLINE SIMDVector<double,simd_abi::sse> shift([[maybe_unused]] FASTOR_INDEX i) {
         SIMDVector<double,simd_abi::sse> out;
         FASTOR_ASSERT(i==1,"INCORRECT SHIFT INDEX");
             out.value = _mm_shift1_pd(value);

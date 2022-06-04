@@ -188,7 +188,7 @@ struct backward_subs_impl {
 
     template<typename T, size_t M>
     static FASTOR_INLINE void do_single_rhs(const Tensor<T,M,M> &U, const Tensor<T,M> &y, Tensor<T,M> &x) {
-        constexpr int idx = (int)M - from;
+        constexpr int idx = static_cast<int>(M) - from;
         const T value = _inner<T,idx>(&U.data()[from*M+from],&x.data()[from]);
         x(from) = ( y(from) - value) / U(from, from);
         backward_subs_impl<from-1,to>::do_single_rhs(U, y, x);
@@ -196,7 +196,7 @@ struct backward_subs_impl {
 
     template<typename T, size_t M, size_t N>
     static FASTOR_INLINE void do_multi_rhs(const size_t j, const Tensor<T,M,M> &U, const Tensor<T,M,N> &Y, Tensor<T,M> &x, Tensor<T,M,N> &X) {
-        constexpr int idx = (int)M - from;
+        constexpr int idx = static_cast<int>(M) - from;
         const T value = _inner<T,idx>(&U.data()[from*M+from],&x.data()[from]);
         x(from) = ( Y(from,j) - value ) / U(from, from);
         X(from,j) = x(from);
@@ -209,14 +209,14 @@ struct backward_subs_impl<0,0> {
 
     template<typename T, size_t M>
     static FASTOR_INLINE void do_single_rhs(const Tensor<T,M,M> &U, const Tensor<T,M> &y, Tensor<T,M> &x) {
-        constexpr int idx = (int)M;
+        constexpr int idx = static_cast<int>(M);
         const T value = _inner<T,idx>(&U.data()[0*M+0],&x.data()[0]);
         x(0) = ( y(0) - value) / U(0, 0);
     }
 
     template<typename T, size_t M, size_t N>
     static FASTOR_INLINE void do_multi_rhs(const size_t j, const Tensor<T,M,M> &U, const Tensor<T,M,N> &Y, Tensor<T,M> &x, Tensor<T,M,N> &X) {
-        constexpr int idx = (int)M;
+        constexpr int idx = static_cast<int>(M);
         const T value = _inner<T,idx>(&U.data()[0*M+0],&x.data()[0]);
         x(0) = ( Y(0,j) - value ) / U(0, 0);
         X(0,j) = x(0);

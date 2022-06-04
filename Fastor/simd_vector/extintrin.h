@@ -47,7 +47,7 @@ FASTOR_INLINE __m128 _mm_loadl3_ps(const float *arr) {
     __m128i mask = _mm_set_epi32(0,-1,-1,-1);
     return _mm_maskload_ps(arr,(__m128i) mask);
 #else
-    __m128i xy = _mm_loadl_epi64((const __m128i*)arr);
+    __m128i xy = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(arr));
     __m128 z   = _mm_load_ss(&arr[2]);
     return _mm_movelh_ps(_mm_castsi128_ps(xy), z);
 #endif
@@ -104,7 +104,7 @@ FASTOR_INLINE void _mm_storel3_ps(float *arr, __m128 value) {
     __m128i mask = _mm_set_epi32(0,-1,-1,-1);
     _mm_maskstore_ps(arr, (__m128i)mask, value);
 #else
-    _mm_storel_pi((__m64*)arr, value);
+    _mm_storel_pi(reinterpret_cast<__m64*>(arr), value);
     _mm_store_ss(&arr[2],_mm_shuffle_ps(value,value,0x2));
 #endif
 }
@@ -116,7 +116,7 @@ FASTOR_INLINE void _mm_storeul3_ps(float *arr, __m128 value) {
     __m128i mask = _mm_set_epi32(0,-1,-1,-1);
     _mm_maskstore_ps(arr, (__m128i)mask, value);
 #else
-    _mm_storel_pi((__m64*)arr, value);
+    _mm_storel_pi(reinterpret_cast<__m64*>(arr), value);
     _mm_store_ss(&arr[2],_mm_shuffle_ps(value,value,0x2));
 #endif
 }
@@ -683,7 +683,7 @@ FASTOR_INLINE __m128i _mm_mul_epi32x(__m128i a, __m128i b)
 FASTOR_INLINE __m128i _mm_mul_epi64(__m128i _a, __m128i _b) {
     __m128i out;
    for (FASTOR_INDEX i=0; i<2; i++) {
-       ((int64_t*)&out)[i] = (((int64_t*)&_a)[i])*(((int64_t*)&_b)[i]);
+       (reinterpret_cast<int64_t*>(&out))[i] = ((reinterpret_cast<int64_t*>(&_a))[i])*((reinterpret_cast<int64_t*>(&_b))[i]);
    }
     return out;
 }
@@ -1140,7 +1140,7 @@ FASTOR_INLINE uint8_t move_bit(uint8_t c1, int from, uint8_t c2, int to)
     /* clear destination bit */
     c2 &= ~(1 << to);
     /* set destination bit */
-    return (uint8_t)(c2 | (bit << to));
+    return static_cast<uint8_t>(c2 | (bit << to));
 }
 
 /* Moves "from" bit of c1 to "to" bit of c2 */
@@ -1152,7 +1152,7 @@ FASTOR_INLINE uint16_t move_bit(uint16_t c1, int from, uint16_t c2, int to)
     /* clear destination bit */
     c2 &= ~(1 << to);
     /* set destination bit */
-    return (uint16_t)(c2 | (bit << to));
+    return static_cast<uint16_t>(c2 | (bit << to));
 }
 //----------------------------------------------------------------------------------------------------------------//
 

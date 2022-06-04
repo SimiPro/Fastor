@@ -20,7 +20,7 @@ namespace Fastor {
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> min(const SIMDVector<T,ABI> &a, const SIMDVector<T,ABI> &b) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::min(((T*)&a)[i],((T*)&b)[i]); }
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::min((reinterpret_cast<T*>(&a))[i],(reinterpret_cast<T*>(&b))[i]); }
     return out;
 }
 template<typename T, typename ABI>
@@ -101,7 +101,7 @@ FASTOR_INLINE SIMDVector<double,simd_abi::avx512> min(const SIMDVector<double,si
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> max(const SIMDVector<T,ABI> &a, const SIMDVector<T,ABI> &b) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::max(((T*)&a)[i],((T*)&b)[i]); }
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::max((reinterpret_cast<T*>(&a))[i],(reinterpret_cast<T*>(&b))[i]); }
     return out;
 }
 template<typename T, typename ABI>
@@ -182,7 +182,7 @@ FASTOR_INLINE SIMDVector<double,simd_abi::avx512> max(const SIMDVector<double,si
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> ceil(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::ceil(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::ceil((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 #ifdef FASTOR_SSE4_1_IMPL
@@ -224,7 +224,7 @@ FASTOR_INLINE SIMDVector<double,simd_abi::avx> ceil(const SIMDVector<double,simd
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> round(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::round(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::round((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 #ifdef FASTOR_SSE4_1_IMPL
@@ -255,7 +255,7 @@ FASTOR_INLINE SIMDVector<double,simd_abi::avx> round(const SIMDVector<double,sim
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> floor(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::floor(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::floor((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 #ifdef FASTOR_SSE4_1_IMPL
@@ -289,56 +289,56 @@ FASTOR_INLINE SIMDVector<double,simd_abi::avx> floor(const SIMDVector<double,sim
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> exp(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::exp(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::exp((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> exp2(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::exp2(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::exp2((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> expm1(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::expm1(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::expm1((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> log(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::log(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::log((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> log10(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::log10(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::log10((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> log2(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::log2(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::log2((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> log1p(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::log1p(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::log1p((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> pow(const SIMDVector<T,ABI> &a, const SIMDVector<T,ABI> &b) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i = 0; i < SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::pow(((T*)&a)[i], ((T*)&b)[i]);}
+    for (FASTOR_INDEX i = 0; i < SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::pow((reinterpret_cast<T*>(&a))[i], (reinterpret_cast<T*>(&b))[i]);}
     return out;
 }
 template<typename T, typename ABI>
@@ -353,56 +353,56 @@ FASTOR_INLINE SIMDVector<T,ABI> pow(T a, const SIMDVector<T,ABI> &b) {
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> cbrt(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::cbrt(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::cbrt((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> sin(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::sin(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::sin((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> cos(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::cos(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::cos((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> tan(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::tan(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::tan((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> asin(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::asin(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::asin((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> acos(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::acos(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::acos((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> atan(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::atan(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::atan((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> atan2(const SIMDVector<T,ABI> &a, const SIMDVector<T,ABI> &b) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i = 0; i < SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::atan2(((T*)&a)[i], ((T*)&b)[i]);}
+    for (FASTOR_INDEX i = 0; i < SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::atan2((reinterpret_cast<T*>(&a))[i], (reinterpret_cast<T*>(&b))[i]);}
     return out;
 }
 template<typename T, typename ABI>
@@ -417,70 +417,70 @@ FASTOR_INLINE SIMDVector<T,ABI> atan2(T a, const SIMDVector<T,ABI> &b) {
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> sinh(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::sinh(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::sinh((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> cosh(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::cosh(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::cosh((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> tanh(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::tanh(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::tanh((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> asinh(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::asinh(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::asinh((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> acosh(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::acosh(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::acosh((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> atanh(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::atanh(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::atanh((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> erf(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::erf(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::erf((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> tgamma(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::tgamma(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::tgamma((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> lgamma(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::lgamma(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::lgamma((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> hypot(const SIMDVector<T,ABI> &a, const SIMDVector<T,ABI> &b) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i = 0; i < SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::hypot(((T*)&a)[i], ((T*)&b)[i]);}
+    for (FASTOR_INDEX i = 0; i < SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::hypot((reinterpret_cast<T*>(&a))[i], (reinterpret_cast<T*>(&b))[i]);}
     return out;
 }
 template<typename T, typename ABI>
@@ -495,7 +495,7 @@ FASTOR_INLINE SIMDVector<T,ABI> hypot(T a, const SIMDVector<T,ABI> &b) {
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<T,ABI> trunc(const SIMDVector<T,ABI> &a) {
     SIMDVector<T,ABI> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((T*)&out)[i] = std::trunc(((T*)&a)[i]);}
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<T*>(&out))[i] = std::trunc((reinterpret_cast<T*>(&a))[i]);}
     return out;
 }
 //----------------------------------------------------------------------------------------------------------------------//
@@ -509,7 +509,7 @@ FASTOR_INLINE SIMDVector<T,ABI> trunc(const SIMDVector<T,ABI> &a) {
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<bool,simd_abi::fixed_size<SIMDVector<T,ABI>::Size>> operator!(const SIMDVector<T,ABI> &a) {
     SIMDVector<bool,simd_abi::fixed_size<SIMDVector<T,ABI>::Size>> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((bool*)&out)[i] = !(((T*)&a)[i]); }
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<bool*>(&out))[i] = !((reinterpret_cast<T*>(&a))[i]); }
     return out;
 }
 //----------------------------------------------------------------------------------------------------------//
@@ -520,21 +520,21 @@ FASTOR_INLINE SIMDVector<bool,simd_abi::fixed_size<SIMDVector<T,ABI>::Size>> ope
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<bool,simd_abi::fixed_size<SIMDVector<T,ABI>::Size>> isinf(const SIMDVector<T,ABI> &a) {
     SIMDVector<bool,simd_abi::fixed_size<SIMDVector<T,ABI>::Size>> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((bool*)&out)[i] = std::isinf(((T*)&a)[i]); }
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<bool*>(&out))[i] = std::isinf((reinterpret_cast<T*>(&a))[i]); }
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<bool,simd_abi::fixed_size<SIMDVector<T,ABI>::Size>> isnan(const SIMDVector<T,ABI> &a) {
     SIMDVector<bool,simd_abi::fixed_size<SIMDVector<T,ABI>::Size>> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((bool*)&out)[i] = std::isnan(((T*)&a)[i]); }
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<bool*>(&out))[i] = std::isnan((reinterpret_cast<T*>(&a))[i]); }
     return out;
 }
 
 template<typename T, typename ABI>
 FASTOR_INLINE SIMDVector<bool,simd_abi::fixed_size<SIMDVector<T,ABI>::Size>> isfinite(const SIMDVector<T,ABI> &a) {
     SIMDVector<bool,simd_abi::fixed_size<SIMDVector<T,ABI>::Size>> out;
-    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { ((bool*)&out)[i] = std::isfinite(((T*)&a)[i]); }
+    for (FASTOR_INDEX i=0; i<SIMDVector<T,ABI>::Size; i++) { (reinterpret_cast<bool*>(&out))[i] = std::isfinite((reinterpret_cast<T*>(&a))[i]); }
     return out;
 }
 //----------------------------------------------------------------------------------------------------------//

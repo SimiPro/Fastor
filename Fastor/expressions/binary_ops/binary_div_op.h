@@ -85,9 +85,9 @@ public:
                                    !is_primitive_v_<RExpr>,bool>::type = 0>
     FASTOR_INLINE SIMDVector<FASTOR_BD_OP_EVAL_TYPE,simd_abi_type> helper(FASTOR_INDEX i) const {
 #ifndef FASTOR_UNSAFE_MATH
-        return (FASTOR_BD_OP_EVAL_TYPE)_lhs / _rhs.template eval<FASTOR_BD_OP_EVAL_TYPE>(i);
+        return static_cast<FASTOR_BD_OP_EVAL_TYPE>(_lhs) / _rhs.template eval<FASTOR_BD_OP_EVAL_TYPE>(i);
 #else
-        return (FASTOR_BD_OP_EVAL_TYPE)_lhs * rcp(_rhs.template eval<FASTOR_BD_OP_EVAL_TYPE>(i));
+        return static_cast<FASTOR_BD_OP_EVAL_TYPE>(_lhs) * rcp(_rhs.template eval<FASTOR_BD_OP_EVAL_TYPE>(i));
 #endif
     }
     template<typename LExpr, typename RExpr, typename U,
@@ -95,7 +95,7 @@ public:
                                    is_primitive_v_<RExpr>,bool>::type = 0>
     FASTOR_INLINE SIMDVector<FASTOR_BD_OP_EVAL_TYPE,simd_abi_type> helper(FASTOR_INDEX i) const {
 #ifndef FASTOR_UNSAFE_MATH
-        return _lhs.template eval<FASTOR_BD_OP_EVAL_TYPE>(i) / (FASTOR_BD_OP_EVAL_TYPE)_rhs;
+        return _lhs.template eval<FASTOR_BD_OP_EVAL_TYPE>(i) / static_cast<FASTOR_BD_OP_EVAL_TYPE>(_rhs);
 #else
         return _lhs.template eval<FASTOR_BD_OP_EVAL_TYPE>(i) * rcp(SIMDVector<FASTOR_BD_OP_EVAL_TYPE,simd_abi_type>(_rhs));
 #endif
@@ -117,13 +117,13 @@ public:
            typename std::enable_if<is_primitive_v_<LExpr> &&
                                    !is_primitive_v_<RExpr>,bool>::type = 0>
     FASTOR_INLINE FASTOR_BD_OP_EVAL_TYPE helper_s(FASTOR_INDEX i) const {
-        return (FASTOR_BD_OP_EVAL_TYPE)_lhs / _rhs.template eval_s<FASTOR_BD_OP_EVAL_TYPE>(i);
+        return static_cast<FASTOR_BD_OP_EVAL_TYPE>(_lhs) / _rhs.template eval_s<FASTOR_BD_OP_EVAL_TYPE>(i);
     }
     template<typename LExpr, typename RExpr, typename U,
            typename std::enable_if<!is_primitive_v_<LExpr> &&
                                    is_primitive_v_<RExpr>,bool>::type = 0>
     FASTOR_INLINE FASTOR_BD_OP_EVAL_TYPE helper_s(FASTOR_INDEX i) const {
-        return _lhs.template eval_s<FASTOR_BD_OP_EVAL_TYPE>(i) / (FASTOR_BD_OP_EVAL_TYPE)_rhs;
+        return _lhs.template eval_s<FASTOR_BD_OP_EVAL_TYPE>(i) / static_cast<FASTOR_BD_OP_EVAL_TYPE>(_rhs);
     }
 
     // for 2D tensors
@@ -147,9 +147,9 @@ public:
                                    !is_primitive_v_<RExpr>,bool>::type = 0>
     FASTOR_INLINE SIMDVector<FASTOR_BD_OP_EVAL_TYPE,simd_abi_type> helper(FASTOR_INDEX i, FASTOR_INDEX j) const {
 #ifndef FASTOR_UNSAFE_MATH
-        return (FASTOR_BD_OP_EVAL_TYPE)_lhs / _rhs.template eval<FASTOR_BD_OP_EVAL_TYPE>(i,j);
+        return static_cast<FASTOR_BD_OP_EVAL_TYPE>(_lhs) / _rhs.template eval<FASTOR_BD_OP_EVAL_TYPE>(i,j);
 #else
-        return (FASTOR_BD_OP_EVAL_TYPE)_lhs * rcp(_rhs.template eval<FASTOR_BD_OP_EVAL_TYPE>(i,j));
+        return static_cast<FASTOR_BD_OP_EVAL_TYPE>(_lhs) * rcp(_rhs.template eval<FASTOR_BD_OP_EVAL_TYPE>(i,j));
 #endif
     }
     template<typename LExpr, typename RExpr, typename U,
@@ -157,7 +157,7 @@ public:
                                    is_primitive_v_<RExpr>,bool>::type = 0>
     FASTOR_INLINE SIMDVector<FASTOR_BD_OP_EVAL_TYPE,simd_abi_type> helper(FASTOR_INDEX i, FASTOR_INDEX j) const {
 #ifndef FASTOR_UNSAFE_MATH
-        return _lhs.template eval<FASTOR_BD_OP_EVAL_TYPE>(i,j) / (FASTOR_BD_OP_EVAL_TYPE)_rhs;
+        return _lhs.template eval<FASTOR_BD_OP_EVAL_TYPE>(i,j) / static_cast<FASTOR_BD_OP_EVAL_TYPE>(_rhs);
 #else
         return _lhs.template eval<FASTOR_BD_OP_EVAL_TYPE>(i,j) * rcp(SIMDVector<FASTOR_BD_OP_EVAL_TYPE,simd_abi_type>(_rhs));
 #endif
@@ -179,13 +179,13 @@ public:
            typename std::enable_if<is_primitive_v_<LExpr> &&
                                    !is_primitive_v_<RExpr>,bool>::type = 0>
     FASTOR_INLINE FASTOR_BD_OP_EVAL_TYPE helper_s(FASTOR_INDEX i, FASTOR_INDEX j) const {
-        return (FASTOR_BD_OP_EVAL_TYPE)_lhs / _rhs.template eval_s<FASTOR_BD_OP_EVAL_TYPE>(i,j);
+        return static_cast<FASTOR_BD_OP_EVAL_TYPE>(_lhs) / _rhs.template eval_s<FASTOR_BD_OP_EVAL_TYPE>(i,j);
     }
     template<typename LExpr, typename RExpr, typename U,
            typename std::enable_if<!is_primitive_v_<LExpr> &&
                                    is_primitive_v_<RExpr>,bool>::type = 0>
     FASTOR_INLINE FASTOR_BD_OP_EVAL_TYPE helper_s(FASTOR_INDEX i, FASTOR_INDEX j) const {
-        return _lhs.template eval_s<FASTOR_BD_OP_EVAL_TYPE>(i,j) / (FASTOR_BD_OP_EVAL_TYPE)_rhs;
+        return _lhs.template eval_s<FASTOR_BD_OP_EVAL_TYPE>(i,j) / static_cast<FASTOR_BD_OP_EVAL_TYPE>(_rhs);
     }
 
     // for nD tensors
@@ -204,13 +204,13 @@ public:
            typename std::enable_if<is_primitive_v_<LExpr> &&
                                    !is_primitive_v_<RExpr>,bool>::type = 0>
     FASTOR_INLINE SIMDVector<FASTOR_BD_OP_EVAL_TYPE,simd_abi_type> thelper(const std::array<int,DIM0> &as) const {
-        return (FASTOR_BD_OP_EVAL_TYPE)_lhs / _rhs.template teval<FASTOR_BD_OP_EVAL_TYPE>(as);
+        return static_cast<FASTOR_BD_OP_EVAL_TYPE>(_lhs) / _rhs.template teval<FASTOR_BD_OP_EVAL_TYPE>(as);
     }
     template<typename LExpr, typename RExpr, typename U,
            typename std::enable_if<!is_primitive_v_<LExpr> &&
                                    is_primitive_v_<RExpr>,bool>::type = 0>
     FASTOR_INLINE SIMDVector<FASTOR_BD_OP_EVAL_TYPE,simd_abi_type> thelper(const std::array<int,DIM0> &as) const {
-        return _lhs.template teval<FASTOR_BD_OP_EVAL_TYPE>(as) / (FASTOR_BD_OP_EVAL_TYPE)_rhs;
+        return _lhs.template teval<FASTOR_BD_OP_EVAL_TYPE>(as) / static_cast<FASTOR_BD_OP_EVAL_TYPE>(_rhs);
     }
 
     // scalar based (for nD tensors)
@@ -229,13 +229,13 @@ public:
            typename std::enable_if<is_primitive_v_<LExpr> &&
                                    !is_primitive_v_<RExpr>,bool>::type = 0>
     FASTOR_INLINE FASTOR_BD_OP_EVAL_TYPE thelper_s(const std::array<int,DIM0> &as) const {
-        return (FASTOR_BD_OP_EVAL_TYPE)_lhs / _rhs.template teval_s<FASTOR_BD_OP_EVAL_TYPE>(as);
+        return static_cast<FASTOR_BD_OP_EVAL_TYPE>(_lhs) / _rhs.template teval_s<FASTOR_BD_OP_EVAL_TYPE>(as);
     }
     template<typename LExpr, typename RExpr, typename U,
            typename std::enable_if<!is_primitive_v_<LExpr> &&
                                    is_primitive_v_<RExpr>,bool>::type = 0>
     FASTOR_INLINE FASTOR_BD_OP_EVAL_TYPE thelper_s(const std::array<int,DIM0> &as) const {
-        return _lhs.template teval_s<FASTOR_BD_OP_EVAL_TYPE>(as) / (FASTOR_BD_OP_EVAL_TYPE)_rhs;
+        return _lhs.template teval_s<FASTOR_BD_OP_EVAL_TYPE>(as) / static_cast<FASTOR_BD_OP_EVAL_TYPE>(_rhs);
     }
 };
 

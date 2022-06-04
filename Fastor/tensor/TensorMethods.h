@@ -49,7 +49,7 @@ FASTOR_INLINE void eye2() {
     constexpr FASTOR_INDEX N = get_value<2,Rest...>::value;
     zeros();
     for (FASTOR_INDEX i=0; i<N; ++i) {
-        _data[i*N+i] = (T)1;
+        _data[i*N+i] = static_cast<T>(1);
     }
 }
 
@@ -85,14 +85,14 @@ FASTOR_INLINE void eye() {
 FASTOR_INLINE void random() {
     //! Populate tensor with random FP numbers
     for (FASTOR_INDEX i=0; i<size(); ++i) {
-        _data[get_mem_index(i)] = (T)rand()/RAND_MAX;
+        _data[get_mem_index(i)] = static_cast<T>(rand())/RAND_MAX;
     }
 }
 
 FASTOR_INLINE void randint() {
     //! Populate tensor with random integer numbers
     for (FASTOR_INDEX i=0; i<size(); ++i) {
-        _data[get_mem_index(i)] = (T)rand();
+        _data[get_mem_index(i)] = static_cast<T>(rand());
     }
 }
 

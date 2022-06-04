@@ -213,7 +213,7 @@ struct is_vectorisable<Index<Idx0...>,Index<Idx1...>,Tensor<T,Rest...>> {
     template<typename ABI> using _vec_size = internal::get_simd_vector_size<SIMDVector<T,ABI>>;
     static constexpr size_t fastest_changing_index = get_value<sizeof...(Rest),Rest...>::value;
     static constexpr size_t idx[sizeof...(Idx0)] = {Idx0...};
-    static constexpr bool does_2nd_tensor_disappear = ((int)no_of_unique<Idx0...,Idx1...>::value == (int)sizeof...(Idx0) - (int)sizeof...(Idx1));
+    static constexpr bool does_2nd_tensor_disappear = (no_of_unique<Idx0...,Idx1...>::value == sizeof...(Idx0) -  sizeof...(Idx1));
     static constexpr bool last_index_contracted = contains(idx,get_value<sizeof...(Idx1),Idx1...>::value);
     static constexpr bool is_reducible = does_2nd_tensor_disappear && last_index_contracted;
     static constexpr bool value = (!last_index_contracted) && (fastest_changing_index % _vec_size<simd_abi::sse>::value==0);
@@ -232,7 +232,7 @@ template<size_t ...Idx0, size_t ...Idx1, size_t...Rest>
 struct is_vectorisable<Index<Idx0...>,Index<Idx1...>,Tensor<float,Rest...>> {
     static constexpr size_t fastest_changing_index = get_value<sizeof...(Rest),Rest...>::value;
     static constexpr size_t idx[sizeof...(Idx0)] = {Idx0...};
-    static constexpr bool does_2nd_tensor_disappear = ((int)no_of_unique<Idx0...,Idx1...>::value == (int)sizeof...(Idx0) - (int)sizeof...(Idx1));
+    static constexpr bool does_2nd_tensor_disappear = (no_of_unique<Idx0...,Idx1...>::value == sizeof...(Idx0) - sizeof...(Idx1));
     static constexpr bool last_index_contracted = contains(idx,get_value<sizeof...(Idx1),Idx1...>::value);
     static constexpr bool is_reducible = does_2nd_tensor_disappear && last_index_contracted;
     static constexpr bool value = (!last_index_contracted) && (fastest_changing_index % 4==0);
@@ -248,7 +248,7 @@ template<size_t ...Idx0, size_t ...Idx1, size_t...Rest>
 struct is_vectorisable<Index<Idx0...>,Index<Idx1...>,Tensor<double,Rest...>> {
     static constexpr size_t fastest_changing_index = get_value<sizeof...(Rest),Rest...>::value;
     static constexpr size_t idx[sizeof...(Idx0)] = {Idx0...};
-    static constexpr bool does_2nd_tensor_disappear = ((int)no_of_unique<Idx0...,Idx1...>::value == (int)sizeof...(Idx0) - (int)sizeof...(Idx1));
+    static constexpr bool does_2nd_tensor_disappear = (no_of_unique<Idx0...,Idx1...>::value == sizeof...(Idx0) - sizeof...(Idx1));
     static constexpr bool last_index_contracted = contains(idx,get_value<sizeof...(Idx1),Idx1...>::value);
     static constexpr bool is_reducible = does_2nd_tensor_disappear && last_index_contracted;
     static constexpr bool value = (!last_index_contracted) && (fastest_changing_index % 2==0);
@@ -673,8 +673,8 @@ inline constexpr std::array<int,N> find_remaining(const std::array<size_t,N> &ma
 }
 
 template<size_t N, int total>
-inline constexpr std::array<std::array<int,N>,(size_t)total> cartesian_product_2(const std::array<size_t,N> &maxes_out) {
-    std::array<std::array<int,N>,(size_t)total> as_all = {};
+inline constexpr std::array<std::array<int,N>,static_cast<size_t>(total)> cartesian_product_2(const std::array<size_t,N> &maxes_out) {
+    std::array<std::array<int,N>,static_cast<size_t>(total)> as_all = {};
     for (int i=0; i<total; i+=1) {
         int remaining = total;
         for (int n=0; n<N; ++n) {

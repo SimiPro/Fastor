@@ -47,7 +47,7 @@ struct SIMDVector {
         std::fill(value, value+Size, 0);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                ((scalar_value_type*)&value)[Size - i - 1] = a[Size - i - 1];
+                (reinterpret_cast<scalar_value_type*>(&value))[Size - i - 1] = a[Size - i - 1];
             }
         }
         unused(Aligned);
@@ -58,7 +58,7 @@ struct SIMDVector {
         mask_to_array(mask,maska);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                a[Size - i - 1] = ((const scalar_value_type*)&value)[Size - i - 1];
+                a[Size - i - 1] = (reinterpret_cast<const scalar_value_type*>(&value))[Size - i - 1];
             }
             else {
                 a[Size - i - 1] = 0;
@@ -102,7 +102,7 @@ struct SIMDVector {
     }
     FASTOR_INLINE void set_sequential(T num0) {
         for (FASTOR_INDEX i=0; i<Size;++i)
-            value[i] = num0+(T)i;
+            value[i] = num0+static_cast<T>(i);
     }
 
     // In-place operators

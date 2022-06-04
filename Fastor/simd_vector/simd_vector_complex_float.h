@@ -302,8 +302,8 @@ protected:
         mask_to_array(mask,maska);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                float _real = ((const float*)&value_r)[Size - i - 1];
-                float _imag = ((const float*)&value_i)[Size - i - 1];
+                float _real = (reinterpret_cast<const float*>(&value_r))[Size - i - 1];
+                float _imag = (reinterpret_cast<const float*>(&value_i))[Size - i - 1];
                 data[Size - i - 1] = std::complex<float>(_real,_imag);
             }
             else {
@@ -325,8 +325,8 @@ protected:
         mask_to_array(mask,maska);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                float _real = ((const float*)&value_r)[Size - i - 1];
-                float _imag = ((const float*)&value_i)[Size - i - 1];
+                float _real = (reinterpret_cast<const float*>(&value_r))[Size - i - 1];
+                float _imag = (reinterpret_cast<const float*>(&value_i))[Size - i - 1];
                 data[Size - i - 1] = std::complex<float>(_real,_imag);
             }
             else {
@@ -549,7 +549,7 @@ FASTOR_INLINE SIMDVector<std::complex<float>,simd_abi::avx512>
 arg(const SIMDVector<std::complex<float>,simd_abi::avx512> &a) {
     SIMDVector<std::complex<float>,simd_abi::avx512> out(a);
     for (FASTOR_INDEX i=0UL; i<16UL; ++i) {
-       ((float*)&out.value_r)[i] = std::atan2(((float*)&a.value_i)[i],((float*)&a.value_r)[i]);
+       ((float*)&out.value_r)[i] = std::atan2((reinterpret_cast<float*>(&a.value_i))[i],((float*)&a.value_r)[i]);
     }
     return out;
 }
@@ -842,8 +842,8 @@ protected:
         mask_to_array(mask,maska);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                float _real = ((const float*)&value_r)[Size - i - 1];
-                float _imag = ((const float*)&value_i)[Size - i - 1];
+                float _real = (reinterpret_cast<const float*>(&value_r))[Size - i - 1];
+                float _imag = (reinterpret_cast<const float*>(&value_i))[Size - i - 1];
                 data[Size - i - 1] = std::complex<float>(_real,_imag);
             }
             else {
@@ -865,8 +865,8 @@ protected:
         mask_to_array(mask,maska);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                float _real = ((const float*)&value_r)[Size - i - 1];
-                float _imag = ((const float*)&value_i)[Size - i - 1];
+                float _real = (reinterpret_cast<const float*>(&value_r))[Size - i - 1];
+                float _imag = (reinterpret_cast<const float*>(&value_i))[Size - i - 1];
                 data[Size - i - 1] = std::complex<float>(_real,_imag);
             }
             else {
@@ -1081,7 +1081,7 @@ FASTOR_INLINE SIMDVector<std::complex<float>,simd_abi::avx>
 arg(const SIMDVector<std::complex<float>,simd_abi::avx> &a) {
     SIMDVector<std::complex<float>,simd_abi::avx> out(a);
     for (FASTOR_INDEX i=0UL; i<8UL; ++i) {
-       ((float*)&out.value_r)[i] = std::atan2(((float*)&a.value_i)[i],((float*)&a.value_r)[i]);
+       ((float*)&out.value_r)[i] = std::atan2((reinterpret_cast<float*>(&a.value_i))[i],((float*)&a.value_r)[i]);
     }
     return out;
 }
@@ -1328,8 +1328,8 @@ protected:
         value_i = _mm_setzero_ps();
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                ((float*)&value_r)[Size - i - 1] = data[Size - i - 1].real();
-                ((float*)&value_i)[Size - i - 1] = data[Size - i - 1].imag();
+                (reinterpret_cast<float*>(&value_r))[Size - i - 1] = data[Size - i - 1].real();
+                (reinterpret_cast<float*>(&value_i))[Size - i - 1] = data[Size - i - 1].imag();
             }
         }
 #endif
@@ -1349,8 +1349,8 @@ protected:
         value_i = _mm_setzero_ps();
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                ((float*)&value_r)[Size - i - 1] = data[Size - i - 1].real();
-                ((float*)&value_i)[Size - i - 1] = data[Size - i - 1].imag();
+                (reinterpret_cast<float*>(&value_r))[Size - i - 1] = data[Size - i - 1].real();
+                (reinterpret_cast<float*>(&value_i))[Size - i - 1] = data[Size - i - 1].imag();
             }
         }
 #endif
@@ -1369,8 +1369,8 @@ protected:
         mask_to_array(mask,maska);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                float _real = ((const float*)&value_r)[Size - i - 1];
-                float _imag = ((const float*)&value_i)[Size - i - 1];
+                float _real = (reinterpret_cast<const float*>(&value_r))[Size - i - 1];
+                float _imag = (reinterpret_cast<const float*>(&value_i))[Size - i - 1];
                 data[Size - i - 1] = std::complex<float>(_real,_imag);
             }
             else {
@@ -1392,8 +1392,8 @@ protected:
         mask_to_array(mask,maska);
         for (FASTOR_INDEX i=0; i<Size; ++i) {
             if (maska[i] == -1) {
-                float _real = ((const float*)&value_r)[Size - i - 1];
-                float _imag = ((const float*)&value_i)[Size - i - 1];
+                float _real = (reinterpret_cast<const float*>(&value_r))[Size - i - 1];
+                float _imag = (reinterpret_cast<const float*>(&value_i))[Size - i - 1];
                 data[Size - i - 1] = std::complex<float>(_real,_imag);
             }
             else {
@@ -1605,7 +1605,8 @@ FASTOR_INLINE SIMDVector<std::complex<float>,simd_abi::sse>
 arg(const SIMDVector<std::complex<float>,simd_abi::sse> &a) {
     SIMDVector<std::complex<float>,simd_abi::sse> out(a);
     for (FASTOR_INDEX i=0UL; i<4UL; ++i) {
-       ((float*)&out.value_r)[i] = std::atan2(((float*)&a.value_i)[i],((float*)&a.value_r)[i]);
+       (reinterpret_cast<float*>(&out.value_r))[i] = std::atan2((reinterpret_cast<const float*>(&a.value_i))[i],
+                                                                (reinterpret_cast<const float*>(&a.value_r))[i]);
     }
     return out;
 }

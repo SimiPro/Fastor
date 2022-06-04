@@ -79,7 +79,7 @@ public:
         int remaining = size();
         for (int n = 0; n < DIMS; ++n) {
             remaining /= _dims[n];
-            as[n] = ( (int)idx / remaining ) % _dims[n];
+            as[n] = ( static_cast<int>(idx) / remaining ) % _dims[n];
         }
         int ind = 0;
         get_index_s<0,DIMS-1>::Do(ind, as);
@@ -117,7 +117,7 @@ public:
         int remaining = size();
         for (int n = 0; n < DIMS; ++n) {
             remaining /= _dims[n];
-            as[n] = ( (int)idx / remaining ) % _dims[n];
+            as[n] = ( static_cast<int>(idx) / remaining ) % _dims[n];
         }
         int ind = 0;
         get_index_s<0,DIMS-1>::Do(ind, as);
@@ -143,7 +143,7 @@ public:
             for (auto j=0; j<V::Size; ++j) {
                 get_index_v<0,DIMS-1>::Do(j, inds, as);
 
-                for(int jt = (int)DIMS-1; jt>=0; jt--)
+                for(int jt = static_cast<int>(DIMS)-1; jt>=0; jt--)
                 {
                   as_[jt] +=1;
                   if(as_[jt]<_dims[jt])
@@ -1200,7 +1200,7 @@ public:
         if (_is_vectorisable) {
             using V=SIMDVector<T,simd_abi_type>;
             constexpr FASTOR_INDEX stride = V::Size;
-            V _vec = (T)num;
+            V _vec = static_cast<T>(num);
             while(counter < total)
             {
                 int ind = 0;
@@ -1226,7 +1226,7 @@ public:
             {
                 int ind = 0;
                 get_index_s<0,DIMS-1>::Do(ind, as);
-                _data[ind] = (T)num;
+                _data[ind] = static_cast<T>(num);
 
                 counter++;
                 for(jt = DIMS-1; jt>=0; jt--)
@@ -1254,7 +1254,7 @@ public:
         if (_is_vectorisable) {
             using V=SIMDVector<T,simd_abi_type>;
             constexpr FASTOR_INDEX stride = V::Size;
-            V _vec = (T)num;
+            V _vec = static_cast<T>(num);
             V _vec_out;
             while(counter < total)
             {
@@ -1283,7 +1283,7 @@ public:
             {
                 int ind = 0;
                 get_index_s<0,DIMS-1>::Do(ind, as);
-                _data[ind] += (T)num;
+                _data[ind] += static_cast<T>(num);
 
                 counter++;
                 for(jt = DIMS-1; jt>=0; jt--)
@@ -1311,7 +1311,7 @@ public:
         if (_is_vectorisable) {
             using V=SIMDVector<T,simd_abi_type>;
             constexpr FASTOR_INDEX stride = V::Size;
-            V _vec = (T)num;
+            V _vec = static_cast<T>(num);
             V _vec_out;
             while(counter < total)
             {
@@ -1340,7 +1340,7 @@ public:
             {
                 int ind = 0;
                 get_index_s<0,DIMS-1>::Do(ind, as);
-                _data[ind] -= (T)num;
+                _data[ind] -= static_cast<T>(num);
 
                 counter++;
                 for(jt = DIMS-1; jt>=0; jt--)
@@ -1368,7 +1368,7 @@ public:
         if (_is_vectorisable) {
             using V=SIMDVector<T,simd_abi_type>;
             constexpr FASTOR_INDEX stride = V::Size;
-            V _vec = (T)num;
+            V _vec = static_cast<T>(num);
             V _vec_out;
             while(counter < total)
             {
@@ -1397,7 +1397,7 @@ public:
             {
                 int ind = 0;
                 get_index_s<0,DIMS-1>::Do(ind, as);
-                _data[ind] *= (T)num;
+                _data[ind] *= static_cast<T>(num);
 
                 counter++;
                 for(jt = DIMS-1; jt>=0; jt--)
@@ -1425,7 +1425,7 @@ public:
         if (_is_vectorisable) {
             using V=SIMDVector<T,simd_abi_type>;
             constexpr FASTOR_INDEX stride = V::Size;
-            V _vec = (T)num;
+            V _vec = static_cast<T>(num);
             V _vec_out;
             while(counter < total)
             {
@@ -1454,7 +1454,7 @@ public:
             {
                 int ind = 0;
                 get_index_s<0,DIMS-1>::Do(ind, as);
-                _data[ind] /= (T)num;
+                _data[ind] /= static_cast<T>(num);
 
                 counter++;
                 for(jt = DIMS-1; jt>=0; jt--)
@@ -1501,7 +1501,7 @@ public:
         int remaining = size();
         for (int n = 0; n < DIMS; ++n) {
             remaining /= _dims[n];
-            as[n] = ( (int)idx / remaining ) % _dims[n];
+            as[n] = ( static_cast<int>(idx) / remaining ) % _dims[n];
         }
         int ind = 0;
         get_index_s<0,DIMS-1>::Do(ind, as);
@@ -1539,7 +1539,7 @@ public:
         int remaining = size();
         for (int n = 0; n < DIMS; ++n) {
             remaining /= _dims[n];
-            as[n] = ( (int)idx / remaining ) % _dims[n];
+            as[n] = ( static_cast<int>(idx) / remaining ) % _dims[n];
         }
         int ind = 0;
         get_index_s<0,DIMS-1>::Do(ind, as);
@@ -1565,7 +1565,7 @@ public:
             for (auto j=0; j<V::Size; ++j) {
                 get_index_v<0,DIMS-1>::Do(j, inds, as);
 
-                for(int jt = (int)DIMS-1; jt>=0; jt--)
+                for(int jt = static_cast<int>(DIMS)-1; jt>=0; jt--)
                 {
                   as_[jt] +=1;
                   if(as_[jt]<_dims[jt])

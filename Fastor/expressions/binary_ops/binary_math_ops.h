@@ -65,13 +65,13 @@ public:\
            typename std::enable_if<is_primitive_v_<LExpr> &&\
                                    !is_primitive_v_<RExpr>,bool>::type = 0>\
     FASTOR_INLINE SIMDVector<EVAL_TYPE,simd_abi_type> helper(FASTOR_INDEX i) const {\
-        return SIMD_OP((EVAL_TYPE)_lhs, _rhs.template eval<EVAL_TYPE>(i));\
+        return SIMD_OP(static_cast<EVAL_TYPE>(_lhs), _rhs.template eval<EVAL_TYPE>(i));\
     }\
     template<typename LExpr, typename RExpr, typename U,\
            typename std::enable_if<!is_primitive_v_<LExpr> &&\
                                    is_primitive_v_<RExpr>,bool>::type = 0>\
     FASTOR_INLINE SIMDVector<EVAL_TYPE,simd_abi_type> helper(FASTOR_INDEX i) const {\
-        return SIMD_OP(_lhs.template eval<EVAL_TYPE>(i), (EVAL_TYPE)_rhs);\
+        return SIMD_OP(_lhs.template eval<EVAL_TYPE>(i), static_cast<EVAL_TYPE>(_rhs));\
     }\
     template<typename U>\
     FASTOR_INLINE EVAL_TYPE eval_s(FASTOR_INDEX i) const {\
@@ -87,13 +87,13 @@ public:\
            typename std::enable_if<is_primitive_v_<LExpr> &&\
                                    !is_primitive_v_<RExpr>,bool>::type = 0>\
     FASTOR_INLINE EVAL_TYPE helper_s(FASTOR_INDEX i) const {\
-        return OP((EVAL_TYPE)_lhs, _rhs.template eval_s<EVAL_TYPE>(i));\
+        return OP(static_cast<EVAL_TYPE>(_lhs), _rhs.template eval_s<EVAL_TYPE>(i));\
     }\
     template<typename LExpr, typename RExpr, typename U,\
            typename std::enable_if<!is_primitive_v_<LExpr> &&\
                                    is_primitive_v_<RExpr>,bool>::type = 0>\
     FASTOR_INLINE EVAL_TYPE helper_s(FASTOR_INDEX i) const {\
-        return OP(_lhs.template eval_s<EVAL_TYPE>(i), (EVAL_TYPE)_rhs);\
+        return OP(_lhs.template eval_s<EVAL_TYPE>(i), static_cast<EVAL_TYPE>(_rhs));\
     }\
     template<typename U>\
     FASTOR_INLINE SIMDVector<EVAL_TYPE,simd_abi_type> eval(FASTOR_INDEX i, FASTOR_INDEX j) const {\
@@ -109,13 +109,13 @@ public:\
            typename std::enable_if<is_primitive_v_<LExpr> &&\
                                    !is_primitive_v_<RExpr>,bool>::type = 0>\
     FASTOR_INLINE SIMDVector<EVAL_TYPE,simd_abi_type> helper(FASTOR_INDEX i, FASTOR_INDEX j) const {\
-        return SIMD_OP((EVAL_TYPE)_lhs, _rhs.template eval<EVAL_TYPE>(i,j));\
+        return SIMD_OP(static_cast<EVAL_TYPE>(_lhs), _rhs.template eval<EVAL_TYPE>(i,j));\
     }\
     template<typename LExpr, typename RExpr, typename U,\
            typename std::enable_if<!is_primitive_v_<LExpr> &&\
                                    is_primitive_v_<RExpr>,bool>::type = 0>\
     FASTOR_INLINE SIMDVector<EVAL_TYPE,simd_abi_type> helper(FASTOR_INDEX i, FASTOR_INDEX j) const {\
-        return SIMD_OP(_lhs.template eval<EVAL_TYPE>(i,j), (EVAL_TYPE)_rhs);\
+        return SIMD_OP(_lhs.template eval<EVAL_TYPE>(i,j), static_cast<EVAL_TYPE>(_rhs));\
     }\
     template<typename U>\
     FASTOR_INLINE EVAL_TYPE eval_s(FASTOR_INDEX i, FASTOR_INDEX j) const {\
@@ -131,13 +131,13 @@ public:\
            typename std::enable_if<is_primitive_v_<LExpr> &&\
                                    !is_primitive_v_<RExpr>,bool>::type = 0>\
     FASTOR_INLINE EVAL_TYPE helper_s(FASTOR_INDEX i, FASTOR_INDEX j) const {\
-        return OP((EVAL_TYPE)_lhs, _rhs.template eval_s<EVAL_TYPE>(i,j));\
+        return OP(static_cast<EVAL_TYPE>(_lhs), _rhs.template eval_s<EVAL_TYPE>(i,j));\
     }\
     template<typename LExpr, typename RExpr, typename U,\
            typename std::enable_if<!is_primitive_v_<LExpr> &&\
                                    is_primitive_v_<RExpr>,bool>::type = 0>\
     FASTOR_INLINE EVAL_TYPE helper_s(FASTOR_INDEX i, FASTOR_INDEX j) const {\
-        return OP(_lhs.template eval_s<EVAL_TYPE>(i,j), (EVAL_TYPE)_rhs);\
+        return OP(_lhs.template eval_s<EVAL_TYPE>(i,j), static_cast<EVAL_TYPE>(_rhs));\
     }\
     template<typename U>\
     FASTOR_INLINE SIMDVector<EVAL_TYPE,simd_abi_type> teval(const std::array<int,DIM0> &as) const {\
@@ -153,13 +153,13 @@ public:\
            typename std::enable_if<is_primitive_v_<LExpr> &&\
                                    !is_primitive_v_<RExpr>,bool>::type = 0>\
     FASTOR_INLINE SIMDVector<EVAL_TYPE,simd_abi_type> thelper(const std::array<int,DIM0> &as) const {\
-        return SIMD_OP((EVAL_TYPE)_lhs, _rhs.template teval<EVAL_TYPE>(as));\
+        return SIMD_OP(static_cast<EVAL_TYPE>(_lhs), _rhs.template teval<EVAL_TYPE>(as));\
     }\
     template<typename LExpr, typename RExpr, typename U,\
            typename std::enable_if<!is_primitive_v_<LExpr> &&\
                                    is_primitive_v_<RExpr>,bool>::type = 0>\
     FASTOR_INLINE SIMDVector<EVAL_TYPE,simd_abi_type> thelper(const std::array<int,DIM0> &as) const {\
-        return SIMD_OP(_lhs.template teval<EVAL_TYPE>(as), (EVAL_TYPE)_rhs);\
+        return SIMD_OP(_lhs.template teval<EVAL_TYPE>(as), static_cast<EVAL_TYPE>(_rhs));\
     }\
     template<typename U>\
     FASTOR_INLINE EVAL_TYPE teval_s(const std::array<int,DIM0> &as) const {\
@@ -175,13 +175,13 @@ public:\
            typename std::enable_if<is_primitive_v_<LExpr> &&\
                                    !is_primitive_v_<RExpr>,bool>::type = 0>\
     FASTOR_INLINE EVAL_TYPE thelper_s(const std::array<int,DIM0> &as) const {\
-        return OP((EVAL_TYPE)_lhs, _rhs.template teval_s<U>(as));\
+        return OP(static_cast<EVAL_TYPE>(_lhs), _rhs.template teval_s<U>(as));\
     }\
     template<typename LExpr, typename RExpr, typename U,\
            typename std::enable_if<!is_primitive_v_<LExpr> &&\
                                    is_primitive_v_<RExpr>,bool>::type = 0>\
     FASTOR_INLINE EVAL_TYPE thelper_s(const std::array<int,DIM0> &as) const {\
-        return OP(_lhs.template teval_s<EVAL_TYPE>(as), (EVAL_TYPE)_rhs);\
+        return OP(_lhs.template teval_s<EVAL_TYPE>(as), static_cast<EVAL_TYPE>(_rhs));\
     }\
 };\
 template<typename TLhs, typename TRhs, size_t DIM0,\
